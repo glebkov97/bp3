@@ -2,12 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-from datetime import datetime
 
 
-def read_and_plot_data(file_path, output_file):
+def read_and_plot_data(input_file, output_file):
     # Читаем данные из CSV-файла
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(input_file)
 
     # Выбираем столбец с абсолютными ошибками
     absolute_errors = df['absolute_error']
@@ -32,5 +31,6 @@ if __name__ == "__main__":
     output_file = './logs/error_distribution.png'
 
     print(f"Создание графика распределения абсолютных ошибок...")
-    read_and_plot_data(input_file, output_file)
+    with pd.option_context('mode.use_inf_as_na', True):  # Используем современный подход
+        read_and_plot_data(input_file, output_file)
     print("График успешно создан и сохранен.")
